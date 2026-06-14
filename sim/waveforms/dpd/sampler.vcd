@@ -1,0 +1,1832 @@
+$date
+	Sun Jun 14 19:47:43 2026
+$end
+$version
+	ModelSim Version 2020.1
+$end
+$timescale
+	1ps
+$end
+
+$scope module sampler_tb $end
+$var parameter 32 ! DATA_WIDTH $end
+$var parameter 12 " DELAY $end
+$var parameter 32 # FIFO_DEPTH $end
+$var parameter 12 $ BATCH_LEN $end
+$var parameter 32 % CLK_PERIOD $end
+$var reg 1 & tb_result $end
+$var integer 32 ' tb_sample_count $end
+$var integer 32 ( tb_batch_count $end
+$var reg 1 ) clk $end
+$var reg 1 * rst $end
+$var reg 1 + we $end
+$var reg 1 , start $end
+$var wire 1 - batch_done $end
+$var wire 1 . ref_capture [13] $end
+$var wire 1 / ref_capture [12] $end
+$var wire 1 0 ref_capture [11] $end
+$var wire 1 1 ref_capture [10] $end
+$var wire 1 2 ref_capture [9] $end
+$var wire 1 3 ref_capture [8] $end
+$var wire 1 4 ref_capture [7] $end
+$var wire 1 5 ref_capture [6] $end
+$var wire 1 6 ref_capture [5] $end
+$var wire 1 7 ref_capture [4] $end
+$var wire 1 8 ref_capture [3] $end
+$var wire 1 9 ref_capture [2] $end
+$var wire 1 : ref_capture [1] $end
+$var wire 1 ; ref_capture [0] $end
+$var wire 1 < fb_capture [13] $end
+$var wire 1 = fb_capture [12] $end
+$var wire 1 > fb_capture [11] $end
+$var wire 1 ? fb_capture [10] $end
+$var wire 1 @ fb_capture [9] $end
+$var wire 1 A fb_capture [8] $end
+$var wire 1 B fb_capture [7] $end
+$var wire 1 C fb_capture [6] $end
+$var wire 1 D fb_capture [5] $end
+$var wire 1 E fb_capture [4] $end
+$var wire 1 F fb_capture [3] $end
+$var wire 1 G fb_capture [2] $end
+$var wire 1 H fb_capture [1] $end
+$var wire 1 I fb_capture [0] $end
+
+$scope module sampler $end
+$var parameter 32 J DATA_WIDTH $end
+$var parameter 32 K FIFO_DEPTH $end
+$var wire 1 L clk $end
+$var wire 1 M rst $end
+$var wire 1 N we $end
+$var wire 1 O start $end
+$var wire 1 P delay_length [11] $end
+$var wire 1 Q delay_length [10] $end
+$var wire 1 R delay_length [9] $end
+$var wire 1 S delay_length [8] $end
+$var wire 1 T delay_length [7] $end
+$var wire 1 U delay_length [6] $end
+$var wire 1 V delay_length [5] $end
+$var wire 1 W delay_length [4] $end
+$var wire 1 X delay_length [3] $end
+$var wire 1 Y delay_length [2] $end
+$var wire 1 Z delay_length [1] $end
+$var wire 1 [ delay_length [0] $end
+$var wire 1 \ batch_length [11] $end
+$var wire 1 ] batch_length [10] $end
+$var wire 1 ^ batch_length [9] $end
+$var wire 1 _ batch_length [8] $end
+$var wire 1 ` batch_length [7] $end
+$var wire 1 a batch_length [6] $end
+$var wire 1 b batch_length [5] $end
+$var wire 1 c batch_length [4] $end
+$var wire 1 d batch_length [3] $end
+$var wire 1 e batch_length [2] $end
+$var wire 1 f batch_length [1] $end
+$var wire 1 g batch_length [0] $end
+$var wire 1 - batch_done $end
+$var wire 1 h done $end
+$var wire 1 i capture_ref $end
+$var wire 1 j capture_fb $end
+$var wire 1 k capture_sample $end
+$var wire 1 l fifo_ref_valid $end
+$var wire 1 m i_ref_capture [13] $end
+$var wire 1 n i_ref_capture [12] $end
+$var wire 1 o i_ref_capture [11] $end
+$var wire 1 p i_ref_capture [10] $end
+$var wire 1 q i_ref_capture [9] $end
+$var wire 1 r i_ref_capture [8] $end
+$var wire 1 s i_ref_capture [7] $end
+$var wire 1 t i_ref_capture [6] $end
+$var wire 1 u i_ref_capture [5] $end
+$var wire 1 v i_ref_capture [4] $end
+$var wire 1 w i_ref_capture [3] $end
+$var wire 1 x i_ref_capture [2] $end
+$var wire 1 y i_ref_capture [1] $end
+$var wire 1 z i_ref_capture [0] $end
+$var wire 1 { i_fb_capture [13] $end
+$var wire 1 | i_fb_capture [12] $end
+$var wire 1 } i_fb_capture [11] $end
+$var wire 1 ~ i_fb_capture [10] $end
+$var wire 1 !! i_fb_capture [9] $end
+$var wire 1 "! i_fb_capture [8] $end
+$var wire 1 #! i_fb_capture [7] $end
+$var wire 1 $! i_fb_capture [6] $end
+$var wire 1 %! i_fb_capture [5] $end
+$var wire 1 &! i_fb_capture [4] $end
+$var wire 1 '! i_fb_capture [3] $end
+$var wire 1 (! i_fb_capture [2] $end
+$var wire 1 )! i_fb_capture [1] $end
+$var wire 1 *! i_fb_capture [0] $end
+$var wire 1 +! fifo_fb_valid $end
+
+$scope module capturectl $end
+$var wire 1 L clk $end
+$var wire 1 M rst $end
+$var wire 1 O start $end
+$var wire 1 N we $end
+$var wire 1 P delay_length [11] $end
+$var wire 1 Q delay_length [10] $end
+$var wire 1 R delay_length [9] $end
+$var wire 1 S delay_length [8] $end
+$var wire 1 T delay_length [7] $end
+$var wire 1 U delay_length [6] $end
+$var wire 1 V delay_length [5] $end
+$var wire 1 W delay_length [4] $end
+$var wire 1 X delay_length [3] $end
+$var wire 1 Y delay_length [2] $end
+$var wire 1 Z delay_length [1] $end
+$var wire 1 [ delay_length [0] $end
+$var wire 1 \ batch_length [11] $end
+$var wire 1 ] batch_length [10] $end
+$var wire 1 ^ batch_length [9] $end
+$var wire 1 _ batch_length [8] $end
+$var wire 1 ` batch_length [7] $end
+$var wire 1 a batch_length [6] $end
+$var wire 1 b batch_length [5] $end
+$var wire 1 c batch_length [4] $end
+$var wire 1 d batch_length [3] $end
+$var wire 1 e batch_length [2] $end
+$var wire 1 f batch_length [1] $end
+$var wire 1 g batch_length [0] $end
+$var wire 1 h capture_done $end
+$var reg 1 ,! capture_ref $end
+$var reg 1 -! capture_fb $end
+$var wire 1 k capture_sample $end
+$var reg 1 .! batch_done $end
+$var reg 12 /! delay_counter [11:0] $end
+$var reg 12 0! sample_counter [11:0] $end
+$upscope $end
+
+$scope module fifo_ref_inst $end
+$var parameter 32 1! DEPTH $end
+$var parameter 32 2! DATA_WIDTH $end
+$var parameter 32 3! KEEP_ENABLE $end
+$var parameter 32 4! KEEP_WIDTH $end
+$var parameter 32 5! LAST_ENABLE $end
+$var parameter 32 6! ID_ENABLE $end
+$var parameter 32 7! ID_WIDTH $end
+$var parameter 32 8! DEST_ENABLE $end
+$var parameter 32 9! DEST_WIDTH $end
+$var parameter 32 :! USER_ENABLE $end
+$var parameter 32 ;! USER_WIDTH $end
+$var parameter 32 <! RAM_PIPELINE $end
+$var parameter 32 =! OUTPUT_FIFO_ENABLE $end
+$var parameter 32 >! FRAME_FIFO $end
+$var parameter 1 ?! USER_BAD_FRAME_VALUE $end
+$var parameter 1 @! USER_BAD_FRAME_MASK $end
+$var parameter 32 A! DROP_OVERSIZE_FRAME $end
+$var parameter 32 B! DROP_BAD_FRAME $end
+$var parameter 32 C! DROP_WHEN_FULL $end
+$var parameter 32 D! MARK_WHEN_FULL $end
+$var parameter 32 E! PAUSE_ENABLE $end
+$var parameter 32 F! FRAME_PAUSE $end
+$var parameter 32 G! ADDR_WIDTH $end
+$var parameter 32 H! CL_KEEP_WDITH $end
+$var parameter 32 I! OUTPUT_FIFO_ADDR_WIDTH $end
+$var parameter 32 J! KEEP_OFFSET $end
+$var parameter 32 K! LAST_OFFSET $end
+$var parameter 32 L! ID_OFFSET $end
+$var parameter 32 M! DEST_OFFSET $end
+$var parameter 32 N! USER_OFFSET $end
+$var parameter 32 O! WIDTH $end
+$var wire 1 L clk $end
+$var wire 1 M rst $end
+$var wire 1 P! s_axis_tdata [13] $end
+$var wire 1 Q! s_axis_tdata [12] $end
+$var wire 1 R! s_axis_tdata [11] $end
+$var wire 1 S! s_axis_tdata [10] $end
+$var wire 1 T! s_axis_tdata [9] $end
+$var wire 1 U! s_axis_tdata [8] $end
+$var wire 1 V! s_axis_tdata [7] $end
+$var wire 1 W! s_axis_tdata [6] $end
+$var wire 1 X! s_axis_tdata [5] $end
+$var wire 1 Y! s_axis_tdata [4] $end
+$var wire 1 Z! s_axis_tdata [3] $end
+$var wire 1 [! s_axis_tdata [2] $end
+$var wire 1 \! s_axis_tdata [1] $end
+$var wire 1 ]! s_axis_tdata [0] $end
+$var wire 1 ^! s_axis_tkeep [1] $end
+$var wire 1 _! s_axis_tkeep [0] $end
+$var wire 1 `! s_axis_tvalid $end
+$var wire 1 a! s_axis_tready $end
+$var wire 1 b! s_axis_tlast $end
+$var wire 1 c! s_axis_tid [7] $end
+$var wire 1 d! s_axis_tid [6] $end
+$var wire 1 e! s_axis_tid [5] $end
+$var wire 1 f! s_axis_tid [4] $end
+$var wire 1 g! s_axis_tid [3] $end
+$var wire 1 h! s_axis_tid [2] $end
+$var wire 1 i! s_axis_tid [1] $end
+$var wire 1 j! s_axis_tid [0] $end
+$var wire 1 k! s_axis_tdest [7] $end
+$var wire 1 l! s_axis_tdest [6] $end
+$var wire 1 m! s_axis_tdest [5] $end
+$var wire 1 n! s_axis_tdest [4] $end
+$var wire 1 o! s_axis_tdest [3] $end
+$var wire 1 p! s_axis_tdest [2] $end
+$var wire 1 q! s_axis_tdest [1] $end
+$var wire 1 r! s_axis_tdest [0] $end
+$var wire 1 s! s_axis_tuser [0] $end
+$var wire 1 m m_axis_tdata [13] $end
+$var wire 1 n m_axis_tdata [12] $end
+$var wire 1 o m_axis_tdata [11] $end
+$var wire 1 p m_axis_tdata [10] $end
+$var wire 1 q m_axis_tdata [9] $end
+$var wire 1 r m_axis_tdata [8] $end
+$var wire 1 s m_axis_tdata [7] $end
+$var wire 1 t m_axis_tdata [6] $end
+$var wire 1 u m_axis_tdata [5] $end
+$var wire 1 v m_axis_tdata [4] $end
+$var wire 1 w m_axis_tdata [3] $end
+$var wire 1 x m_axis_tdata [2] $end
+$var wire 1 y m_axis_tdata [1] $end
+$var wire 1 z m_axis_tdata [0] $end
+$var wire 1 t! m_axis_tkeep [1] $end
+$var wire 1 u! m_axis_tkeep [0] $end
+$var wire 1 l m_axis_tvalid $end
+$var wire 1 h m_axis_tready $end
+$var wire 1 v! m_axis_tlast $end
+$var wire 1 w! m_axis_tid [7] $end
+$var wire 1 x! m_axis_tid [6] $end
+$var wire 1 y! m_axis_tid [5] $end
+$var wire 1 z! m_axis_tid [4] $end
+$var wire 1 {! m_axis_tid [3] $end
+$var wire 1 |! m_axis_tid [2] $end
+$var wire 1 }! m_axis_tid [1] $end
+$var wire 1 ~! m_axis_tid [0] $end
+$var wire 1 !" m_axis_tdest [7] $end
+$var wire 1 "" m_axis_tdest [6] $end
+$var wire 1 #" m_axis_tdest [5] $end
+$var wire 1 $" m_axis_tdest [4] $end
+$var wire 1 %" m_axis_tdest [3] $end
+$var wire 1 &" m_axis_tdest [2] $end
+$var wire 1 '" m_axis_tdest [1] $end
+$var wire 1 (" m_axis_tdest [0] $end
+$var wire 1 )" m_axis_tuser [0] $end
+$var wire 1 *" pause_req $end
+$var wire 1 +" pause_ack $end
+$var wire 1 ," status_depth [4] $end
+$var wire 1 -" status_depth [3] $end
+$var wire 1 ." status_depth [2] $end
+$var wire 1 /" status_depth [1] $end
+$var wire 1 0" status_depth [0] $end
+$var wire 1 1" status_depth_commit [4] $end
+$var wire 1 2" status_depth_commit [3] $end
+$var wire 1 3" status_depth_commit [2] $end
+$var wire 1 4" status_depth_commit [1] $end
+$var wire 1 5" status_depth_commit [0] $end
+$var wire 1 6" status_overflow $end
+$var wire 1 7" status_bad_frame $end
+$var wire 1 8" status_good_frame $end
+$var reg 5 9" wr_ptr_reg [4:0] $end
+$var reg 5 :" wr_ptr_commit_reg [4:0] $end
+$var reg 5 ;" rd_ptr_reg [4:0] $end
+$var reg 1 <" mem_read_data_valid_reg $end
+$var reg 2 =" m_axis_tvalid_pipe_reg [1:0] $end
+$var wire 1 >" full $end
+$var wire 1 ?" empty $end
+$var wire 1 @" full_wr $end
+$var reg 1 A" s_frame_reg $end
+$var reg 1 B" drop_frame_reg $end
+$var reg 1 C" mark_frame_reg $end
+$var reg 1 D" send_frame_reg $end
+$var reg 5 E" depth_reg [4:0] $end
+$var reg 5 F" depth_commit_reg [4:0] $end
+$var reg 1 G" overflow_reg $end
+$var reg 1 H" bad_frame_reg $end
+$var reg 1 I" good_frame_reg $end
+$var wire 1 J" s_axis [13] $end
+$var wire 1 K" s_axis [12] $end
+$var wire 1 L" s_axis [11] $end
+$var wire 1 M" s_axis [10] $end
+$var wire 1 N" s_axis [9] $end
+$var wire 1 O" s_axis [8] $end
+$var wire 1 P" s_axis [7] $end
+$var wire 1 Q" s_axis [6] $end
+$var wire 1 R" s_axis [5] $end
+$var wire 1 S" s_axis [4] $end
+$var wire 1 T" s_axis [3] $end
+$var wire 1 U" s_axis [2] $end
+$var wire 1 V" s_axis [1] $end
+$var wire 1 W" s_axis [0] $end
+$var wire 1 X" m_axis [13] $end
+$var wire 1 Y" m_axis [12] $end
+$var wire 1 Z" m_axis [11] $end
+$var wire 1 [" m_axis [10] $end
+$var wire 1 \" m_axis [9] $end
+$var wire 1 ]" m_axis [8] $end
+$var wire 1 ^" m_axis [7] $end
+$var wire 1 _" m_axis [6] $end
+$var wire 1 `" m_axis [5] $end
+$var wire 1 a" m_axis [4] $end
+$var wire 1 b" m_axis [3] $end
+$var wire 1 c" m_axis [2] $end
+$var wire 1 d" m_axis [1] $end
+$var wire 1 e" m_axis [0] $end
+$var wire 1 f" m_axis_tready_pipe $end
+$var wire 1 g" m_axis_tvalid_pipe $end
+$var wire 1 h" m_axis_tdata_pipe [13] $end
+$var wire 1 i" m_axis_tdata_pipe [12] $end
+$var wire 1 j" m_axis_tdata_pipe [11] $end
+$var wire 1 k" m_axis_tdata_pipe [10] $end
+$var wire 1 l" m_axis_tdata_pipe [9] $end
+$var wire 1 m" m_axis_tdata_pipe [8] $end
+$var wire 1 n" m_axis_tdata_pipe [7] $end
+$var wire 1 o" m_axis_tdata_pipe [6] $end
+$var wire 1 p" m_axis_tdata_pipe [5] $end
+$var wire 1 q" m_axis_tdata_pipe [4] $end
+$var wire 1 r" m_axis_tdata_pipe [3] $end
+$var wire 1 s" m_axis_tdata_pipe [2] $end
+$var wire 1 t" m_axis_tdata_pipe [1] $end
+$var wire 1 u" m_axis_tdata_pipe [0] $end
+$var wire 1 v" m_axis_tkeep_pipe [1] $end
+$var wire 1 w" m_axis_tkeep_pipe [0] $end
+$var wire 1 x" m_axis_tlast_pipe $end
+$var wire 1 y" m_axis_tid_pipe [7] $end
+$var wire 1 z" m_axis_tid_pipe [6] $end
+$var wire 1 {" m_axis_tid_pipe [5] $end
+$var wire 1 |" m_axis_tid_pipe [4] $end
+$var wire 1 }" m_axis_tid_pipe [3] $end
+$var wire 1 ~" m_axis_tid_pipe [2] $end
+$var wire 1 !# m_axis_tid_pipe [1] $end
+$var wire 1 "# m_axis_tid_pipe [0] $end
+$var wire 1 ## m_axis_tdest_pipe [7] $end
+$var wire 1 $# m_axis_tdest_pipe [6] $end
+$var wire 1 %# m_axis_tdest_pipe [5] $end
+$var wire 1 &# m_axis_tdest_pipe [4] $end
+$var wire 1 '# m_axis_tdest_pipe [3] $end
+$var wire 1 (# m_axis_tdest_pipe [2] $end
+$var wire 1 )# m_axis_tdest_pipe [1] $end
+$var wire 1 *# m_axis_tdest_pipe [0] $end
+$var wire 1 +# m_axis_tuser_pipe [0] $end
+$var wire 1 ,# m_axis_tready_out $end
+$var wire 1 -# m_axis_tvalid_out $end
+$var wire 1 .# m_axis_tdata_out [13] $end
+$var wire 1 /# m_axis_tdata_out [12] $end
+$var wire 1 0# m_axis_tdata_out [11] $end
+$var wire 1 1# m_axis_tdata_out [10] $end
+$var wire 1 2# m_axis_tdata_out [9] $end
+$var wire 1 3# m_axis_tdata_out [8] $end
+$var wire 1 4# m_axis_tdata_out [7] $end
+$var wire 1 5# m_axis_tdata_out [6] $end
+$var wire 1 6# m_axis_tdata_out [5] $end
+$var wire 1 7# m_axis_tdata_out [4] $end
+$var wire 1 8# m_axis_tdata_out [3] $end
+$var wire 1 9# m_axis_tdata_out [2] $end
+$var wire 1 :# m_axis_tdata_out [1] $end
+$var wire 1 ;# m_axis_tdata_out [0] $end
+$var wire 1 <# m_axis_tkeep_out [1] $end
+$var wire 1 =# m_axis_tkeep_out [0] $end
+$var wire 1 ># m_axis_tlast_out $end
+$var wire 1 ?# m_axis_tid_out [7] $end
+$var wire 1 @# m_axis_tid_out [6] $end
+$var wire 1 A# m_axis_tid_out [5] $end
+$var wire 1 B# m_axis_tid_out [4] $end
+$var wire 1 C# m_axis_tid_out [3] $end
+$var wire 1 D# m_axis_tid_out [2] $end
+$var wire 1 E# m_axis_tid_out [1] $end
+$var wire 1 F# m_axis_tid_out [0] $end
+$var wire 1 G# m_axis_tdest_out [7] $end
+$var wire 1 H# m_axis_tdest_out [6] $end
+$var wire 1 I# m_axis_tdest_out [5] $end
+$var wire 1 J# m_axis_tdest_out [4] $end
+$var wire 1 K# m_axis_tdest_out [3] $end
+$var wire 1 L# m_axis_tdest_out [2] $end
+$var wire 1 M# m_axis_tdest_out [1] $end
+$var wire 1 N# m_axis_tdest_out [0] $end
+$var wire 1 O# m_axis_tuser_out [0] $end
+$var wire 1 P# pipe_ready $end
+$var integer 32 Q# j $end
+
+$scope begin genblk1 $end
+$upscope $end
+
+$scope begin genblk2 $end
+$upscope $end
+
+$scope begin genblk3 $end
+$upscope $end
+
+$scope begin genblk4 $end
+$upscope $end
+
+$scope begin genblk5 $end
+$upscope $end
+
+$scope begin genblk6 $end
+$upscope $end
+
+$scope begin genblk7 $end
+$upscope $end
+$upscope $end
+
+$scope module fifo_fb_inst $end
+$var parameter 32 R# DEPTH $end
+$var parameter 32 S# DATA_WIDTH $end
+$var parameter 32 T# KEEP_ENABLE $end
+$var parameter 32 U# KEEP_WIDTH $end
+$var parameter 32 V# LAST_ENABLE $end
+$var parameter 32 W# ID_ENABLE $end
+$var parameter 32 X# ID_WIDTH $end
+$var parameter 32 Y# DEST_ENABLE $end
+$var parameter 32 Z# DEST_WIDTH $end
+$var parameter 32 [# USER_ENABLE $end
+$var parameter 32 \# USER_WIDTH $end
+$var parameter 32 ]# RAM_PIPELINE $end
+$var parameter 32 ^# OUTPUT_FIFO_ENABLE $end
+$var parameter 32 _# FRAME_FIFO $end
+$var parameter 1 `# USER_BAD_FRAME_VALUE $end
+$var parameter 1 a# USER_BAD_FRAME_MASK $end
+$var parameter 32 b# DROP_OVERSIZE_FRAME $end
+$var parameter 32 c# DROP_BAD_FRAME $end
+$var parameter 32 d# DROP_WHEN_FULL $end
+$var parameter 32 e# MARK_WHEN_FULL $end
+$var parameter 32 f# PAUSE_ENABLE $end
+$var parameter 32 g# FRAME_PAUSE $end
+$var parameter 32 h# ADDR_WIDTH $end
+$var parameter 32 i# CL_KEEP_WDITH $end
+$var parameter 32 j# OUTPUT_FIFO_ADDR_WIDTH $end
+$var parameter 32 k# KEEP_OFFSET $end
+$var parameter 32 l# LAST_OFFSET $end
+$var parameter 32 m# ID_OFFSET $end
+$var parameter 32 n# DEST_OFFSET $end
+$var parameter 32 o# USER_OFFSET $end
+$var parameter 32 p# WIDTH $end
+$var wire 1 L clk $end
+$var wire 1 M rst $end
+$var wire 1 q# s_axis_tdata [13] $end
+$var wire 1 r# s_axis_tdata [12] $end
+$var wire 1 s# s_axis_tdata [11] $end
+$var wire 1 t# s_axis_tdata [10] $end
+$var wire 1 u# s_axis_tdata [9] $end
+$var wire 1 v# s_axis_tdata [8] $end
+$var wire 1 w# s_axis_tdata [7] $end
+$var wire 1 x# s_axis_tdata [6] $end
+$var wire 1 y# s_axis_tdata [5] $end
+$var wire 1 z# s_axis_tdata [4] $end
+$var wire 1 {# s_axis_tdata [3] $end
+$var wire 1 |# s_axis_tdata [2] $end
+$var wire 1 }# s_axis_tdata [1] $end
+$var wire 1 ~# s_axis_tdata [0] $end
+$var wire 1 !$ s_axis_tkeep [1] $end
+$var wire 1 "$ s_axis_tkeep [0] $end
+$var wire 1 #$ s_axis_tvalid $end
+$var wire 1 $$ s_axis_tready $end
+$var wire 1 %$ s_axis_tlast $end
+$var wire 1 &$ s_axis_tid [7] $end
+$var wire 1 '$ s_axis_tid [6] $end
+$var wire 1 ($ s_axis_tid [5] $end
+$var wire 1 )$ s_axis_tid [4] $end
+$var wire 1 *$ s_axis_tid [3] $end
+$var wire 1 +$ s_axis_tid [2] $end
+$var wire 1 ,$ s_axis_tid [1] $end
+$var wire 1 -$ s_axis_tid [0] $end
+$var wire 1 .$ s_axis_tdest [7] $end
+$var wire 1 /$ s_axis_tdest [6] $end
+$var wire 1 0$ s_axis_tdest [5] $end
+$var wire 1 1$ s_axis_tdest [4] $end
+$var wire 1 2$ s_axis_tdest [3] $end
+$var wire 1 3$ s_axis_tdest [2] $end
+$var wire 1 4$ s_axis_tdest [1] $end
+$var wire 1 5$ s_axis_tdest [0] $end
+$var wire 1 6$ s_axis_tuser [0] $end
+$var wire 1 { m_axis_tdata [13] $end
+$var wire 1 | m_axis_tdata [12] $end
+$var wire 1 } m_axis_tdata [11] $end
+$var wire 1 ~ m_axis_tdata [10] $end
+$var wire 1 !! m_axis_tdata [9] $end
+$var wire 1 "! m_axis_tdata [8] $end
+$var wire 1 #! m_axis_tdata [7] $end
+$var wire 1 $! m_axis_tdata [6] $end
+$var wire 1 %! m_axis_tdata [5] $end
+$var wire 1 &! m_axis_tdata [4] $end
+$var wire 1 '! m_axis_tdata [3] $end
+$var wire 1 (! m_axis_tdata [2] $end
+$var wire 1 )! m_axis_tdata [1] $end
+$var wire 1 *! m_axis_tdata [0] $end
+$var wire 1 7$ m_axis_tkeep [1] $end
+$var wire 1 8$ m_axis_tkeep [0] $end
+$var wire 1 +! m_axis_tvalid $end
+$var wire 1 h m_axis_tready $end
+$var wire 1 9$ m_axis_tlast $end
+$var wire 1 :$ m_axis_tid [7] $end
+$var wire 1 ;$ m_axis_tid [6] $end
+$var wire 1 <$ m_axis_tid [5] $end
+$var wire 1 =$ m_axis_tid [4] $end
+$var wire 1 >$ m_axis_tid [3] $end
+$var wire 1 ?$ m_axis_tid [2] $end
+$var wire 1 @$ m_axis_tid [1] $end
+$var wire 1 A$ m_axis_tid [0] $end
+$var wire 1 B$ m_axis_tdest [7] $end
+$var wire 1 C$ m_axis_tdest [6] $end
+$var wire 1 D$ m_axis_tdest [5] $end
+$var wire 1 E$ m_axis_tdest [4] $end
+$var wire 1 F$ m_axis_tdest [3] $end
+$var wire 1 G$ m_axis_tdest [2] $end
+$var wire 1 H$ m_axis_tdest [1] $end
+$var wire 1 I$ m_axis_tdest [0] $end
+$var wire 1 J$ m_axis_tuser [0] $end
+$var wire 1 K$ pause_req $end
+$var wire 1 L$ pause_ack $end
+$var wire 1 M$ status_depth [4] $end
+$var wire 1 N$ status_depth [3] $end
+$var wire 1 O$ status_depth [2] $end
+$var wire 1 P$ status_depth [1] $end
+$var wire 1 Q$ status_depth [0] $end
+$var wire 1 R$ status_depth_commit [4] $end
+$var wire 1 S$ status_depth_commit [3] $end
+$var wire 1 T$ status_depth_commit [2] $end
+$var wire 1 U$ status_depth_commit [1] $end
+$var wire 1 V$ status_depth_commit [0] $end
+$var wire 1 W$ status_overflow $end
+$var wire 1 X$ status_bad_frame $end
+$var wire 1 Y$ status_good_frame $end
+$var reg 5 Z$ wr_ptr_reg [4:0] $end
+$var reg 5 [$ wr_ptr_commit_reg [4:0] $end
+$var reg 5 \$ rd_ptr_reg [4:0] $end
+$var reg 1 ]$ mem_read_data_valid_reg $end
+$var reg 2 ^$ m_axis_tvalid_pipe_reg [1:0] $end
+$var wire 1 _$ full $end
+$var wire 1 `$ empty $end
+$var wire 1 a$ full_wr $end
+$var reg 1 b$ s_frame_reg $end
+$var reg 1 c$ drop_frame_reg $end
+$var reg 1 d$ mark_frame_reg $end
+$var reg 1 e$ send_frame_reg $end
+$var reg 5 f$ depth_reg [4:0] $end
+$var reg 5 g$ depth_commit_reg [4:0] $end
+$var reg 1 h$ overflow_reg $end
+$var reg 1 i$ bad_frame_reg $end
+$var reg 1 j$ good_frame_reg $end
+$var wire 1 k$ s_axis [13] $end
+$var wire 1 l$ s_axis [12] $end
+$var wire 1 m$ s_axis [11] $end
+$var wire 1 n$ s_axis [10] $end
+$var wire 1 o$ s_axis [9] $end
+$var wire 1 p$ s_axis [8] $end
+$var wire 1 q$ s_axis [7] $end
+$var wire 1 r$ s_axis [6] $end
+$var wire 1 s$ s_axis [5] $end
+$var wire 1 t$ s_axis [4] $end
+$var wire 1 u$ s_axis [3] $end
+$var wire 1 v$ s_axis [2] $end
+$var wire 1 w$ s_axis [1] $end
+$var wire 1 x$ s_axis [0] $end
+$var wire 1 y$ m_axis [13] $end
+$var wire 1 z$ m_axis [12] $end
+$var wire 1 {$ m_axis [11] $end
+$var wire 1 |$ m_axis [10] $end
+$var wire 1 }$ m_axis [9] $end
+$var wire 1 ~$ m_axis [8] $end
+$var wire 1 !% m_axis [7] $end
+$var wire 1 "% m_axis [6] $end
+$var wire 1 #% m_axis [5] $end
+$var wire 1 $% m_axis [4] $end
+$var wire 1 %% m_axis [3] $end
+$var wire 1 &% m_axis [2] $end
+$var wire 1 '% m_axis [1] $end
+$var wire 1 (% m_axis [0] $end
+$var wire 1 )% m_axis_tready_pipe $end
+$var wire 1 *% m_axis_tvalid_pipe $end
+$var wire 1 +% m_axis_tdata_pipe [13] $end
+$var wire 1 ,% m_axis_tdata_pipe [12] $end
+$var wire 1 -% m_axis_tdata_pipe [11] $end
+$var wire 1 .% m_axis_tdata_pipe [10] $end
+$var wire 1 /% m_axis_tdata_pipe [9] $end
+$var wire 1 0% m_axis_tdata_pipe [8] $end
+$var wire 1 1% m_axis_tdata_pipe [7] $end
+$var wire 1 2% m_axis_tdata_pipe [6] $end
+$var wire 1 3% m_axis_tdata_pipe [5] $end
+$var wire 1 4% m_axis_tdata_pipe [4] $end
+$var wire 1 5% m_axis_tdata_pipe [3] $end
+$var wire 1 6% m_axis_tdata_pipe [2] $end
+$var wire 1 7% m_axis_tdata_pipe [1] $end
+$var wire 1 8% m_axis_tdata_pipe [0] $end
+$var wire 1 9% m_axis_tkeep_pipe [1] $end
+$var wire 1 :% m_axis_tkeep_pipe [0] $end
+$var wire 1 ;% m_axis_tlast_pipe $end
+$var wire 1 <% m_axis_tid_pipe [7] $end
+$var wire 1 =% m_axis_tid_pipe [6] $end
+$var wire 1 >% m_axis_tid_pipe [5] $end
+$var wire 1 ?% m_axis_tid_pipe [4] $end
+$var wire 1 @% m_axis_tid_pipe [3] $end
+$var wire 1 A% m_axis_tid_pipe [2] $end
+$var wire 1 B% m_axis_tid_pipe [1] $end
+$var wire 1 C% m_axis_tid_pipe [0] $end
+$var wire 1 D% m_axis_tdest_pipe [7] $end
+$var wire 1 E% m_axis_tdest_pipe [6] $end
+$var wire 1 F% m_axis_tdest_pipe [5] $end
+$var wire 1 G% m_axis_tdest_pipe [4] $end
+$var wire 1 H% m_axis_tdest_pipe [3] $end
+$var wire 1 I% m_axis_tdest_pipe [2] $end
+$var wire 1 J% m_axis_tdest_pipe [1] $end
+$var wire 1 K% m_axis_tdest_pipe [0] $end
+$var wire 1 L% m_axis_tuser_pipe [0] $end
+$var wire 1 M% m_axis_tready_out $end
+$var wire 1 N% m_axis_tvalid_out $end
+$var wire 1 O% m_axis_tdata_out [13] $end
+$var wire 1 P% m_axis_tdata_out [12] $end
+$var wire 1 Q% m_axis_tdata_out [11] $end
+$var wire 1 R% m_axis_tdata_out [10] $end
+$var wire 1 S% m_axis_tdata_out [9] $end
+$var wire 1 T% m_axis_tdata_out [8] $end
+$var wire 1 U% m_axis_tdata_out [7] $end
+$var wire 1 V% m_axis_tdata_out [6] $end
+$var wire 1 W% m_axis_tdata_out [5] $end
+$var wire 1 X% m_axis_tdata_out [4] $end
+$var wire 1 Y% m_axis_tdata_out [3] $end
+$var wire 1 Z% m_axis_tdata_out [2] $end
+$var wire 1 [% m_axis_tdata_out [1] $end
+$var wire 1 \% m_axis_tdata_out [0] $end
+$var wire 1 ]% m_axis_tkeep_out [1] $end
+$var wire 1 ^% m_axis_tkeep_out [0] $end
+$var wire 1 _% m_axis_tlast_out $end
+$var wire 1 `% m_axis_tid_out [7] $end
+$var wire 1 a% m_axis_tid_out [6] $end
+$var wire 1 b% m_axis_tid_out [5] $end
+$var wire 1 c% m_axis_tid_out [4] $end
+$var wire 1 d% m_axis_tid_out [3] $end
+$var wire 1 e% m_axis_tid_out [2] $end
+$var wire 1 f% m_axis_tid_out [1] $end
+$var wire 1 g% m_axis_tid_out [0] $end
+$var wire 1 h% m_axis_tdest_out [7] $end
+$var wire 1 i% m_axis_tdest_out [6] $end
+$var wire 1 j% m_axis_tdest_out [5] $end
+$var wire 1 k% m_axis_tdest_out [4] $end
+$var wire 1 l% m_axis_tdest_out [3] $end
+$var wire 1 m% m_axis_tdest_out [2] $end
+$var wire 1 n% m_axis_tdest_out [1] $end
+$var wire 1 o% m_axis_tdest_out [0] $end
+$var wire 1 p% m_axis_tuser_out [0] $end
+$var wire 1 q% pipe_ready $end
+$var integer 32 r% j $end
+
+$scope begin genblk1 $end
+$upscope $end
+
+$scope begin genblk2 $end
+$upscope $end
+
+$scope begin genblk3 $end
+$upscope $end
+
+$scope begin genblk4 $end
+$upscope $end
+
+$scope begin genblk5 $end
+$upscope $end
+
+$scope begin genblk6 $end
+$upscope $end
+
+$scope begin genblk7 $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+1&
+0)
+1*
+1+
+0,
+x,!
+x-!
+x.!
+b0 /!
+b0 0!
+b0 9"
+b0 :"
+b0 ;"
+0<"
+b0 ="
+0A"
+0B"
+0C"
+0D"
+b0 E"
+b0 F"
+0G"
+0H"
+0I"
+b0 Z$
+b0 [$
+b0 \$
+0]$
+b0 ^$
+0b$
+0c$
+0d$
+0e$
+b0 f$
+b0 g$
+0h$
+0i$
+0j$
+b1110 !
+b111 "
+b10000 #
+b11 $
+b1010 %
+b1110 J
+b10000 K
+b10000 1!
+b1110 2!
+b0 3!
+b10 4!
+b0 5!
+b0 6!
+b1000 7!
+b0 8!
+b1000 9!
+b0 :!
+b1 ;!
+b1 <!
+b0 =!
+b0 >!
+b1 ?!
+b1 @!
+b0 A!
+b0 B!
+b0 C!
+b0 D!
+b0 E!
+b0 F!
+b100 G!
+b1 H!
+b11 I!
+b1110 J!
+b1110 K!
+b1110 L!
+b1110 M!
+b1110 N!
+b1110 O!
+b10000 R#
+b1110 S#
+b0 T#
+b10 U#
+b0 V#
+b0 W#
+b1000 X#
+b0 Y#
+b1000 Z#
+b0 [#
+b1 \#
+b1 ]#
+b0 ^#
+b0 _#
+b1 `#
+b1 a#
+b0 b#
+b0 c#
+b0 d#
+b0 e#
+b0 f#
+b0 g#
+b100 h#
+b1 i#
+b11 j#
+b1110 k#
+b1110 l#
+b1110 m#
+b1110 n#
+b1110 o#
+b1110 p#
+b0 '
+b0 (
+bx Q#
+bx r%
+x-
+0;
+0:
+09
+08
+07
+06
+05
+04
+03
+02
+01
+00
+0/
+0.
+0I
+0H
+0G
+0F
+0E
+0D
+0C
+0B
+0A
+0@
+0?
+0>
+0=
+0<
+0h
+xi
+xj
+xk
+0l
+xz
+xy
+xx
+xw
+xv
+xu
+xt
+xs
+xr
+xq
+xp
+xo
+xn
+xm
+0>"
+1?"
+0@"
+0W"
+0V"
+0U"
+0T"
+0S"
+0R"
+0Q"
+0P"
+0O"
+0N"
+0M"
+0L"
+0K"
+0J"
+xe"
+xd"
+xc"
+xb"
+xa"
+x`"
+x_"
+x^"
+x]"
+x\"
+x["
+xZ"
+xY"
+xX"
+0f"
+0g"
+xu"
+xt"
+xs"
+xr"
+xq"
+xp"
+xo"
+xn"
+xm"
+xl"
+xk"
+xj"
+xi"
+xh"
+1w"
+1v"
+1x"
+0"#
+0!#
+0~"
+0}"
+0|"
+0{"
+0z"
+0y"
+0*#
+0)#
+0(#
+0'#
+0&#
+0%#
+0$#
+0##
+0+#
+0,#
+0-#
+x;#
+x:#
+x9#
+x8#
+x7#
+x6#
+x5#
+x4#
+x3#
+x2#
+x1#
+x0#
+x/#
+x.#
+1=#
+1<#
+1>#
+0F#
+0E#
+0D#
+0C#
+0B#
+0A#
+0@#
+0?#
+0N#
+0M#
+0L#
+0K#
+0J#
+0I#
+0H#
+0G#
+0O#
+1P#
+x*!
+x)!
+x(!
+x'!
+x&!
+x%!
+x$!
+x#!
+x"!
+x!!
+x~
+x}
+x|
+x{
+0+!
+0_$
+1`$
+0a$
+0x$
+0w$
+0v$
+0u$
+0t$
+0s$
+0r$
+0q$
+0p$
+0o$
+0n$
+0m$
+0l$
+0k$
+x(%
+x'%
+x&%
+x%%
+x$%
+x#%
+x"%
+x!%
+x~$
+x}$
+x|$
+x{$
+xz$
+xy$
+0)%
+0*%
+x8%
+x7%
+x6%
+x5%
+x4%
+x3%
+x2%
+x1%
+x0%
+x/%
+x.%
+x-%
+x,%
+x+%
+1:%
+19%
+1;%
+0C%
+0B%
+0A%
+0@%
+0?%
+0>%
+0=%
+0<%
+0K%
+0J%
+0I%
+0H%
+0G%
+0F%
+0E%
+0D%
+0L%
+0M%
+0N%
+x\%
+x[%
+xZ%
+xY%
+xX%
+xW%
+xV%
+xU%
+xT%
+xS%
+xR%
+xQ%
+xP%
+xO%
+1^%
+1]%
+1_%
+0g%
+0f%
+0e%
+0d%
+0c%
+0b%
+0a%
+0`%
+0o%
+0n%
+0m%
+0l%
+0k%
+0j%
+0i%
+0h%
+0p%
+1q%
+1g
+1f
+0e
+0d
+0c
+0b
+0a
+0`
+0_
+0^
+0]
+0\
+1[
+1Z
+1Y
+0X
+0W
+0V
+0U
+0T
+0S
+0R
+0Q
+0P
+0L
+1M
+1N
+0O
+0K$
+06$
+05$
+04$
+03$
+02$
+01$
+00$
+0/$
+0.$
+0-$
+0,$
+0+$
+0*$
+0)$
+0($
+0'$
+0&$
+0%$
+0"$
+0!$
+0s!
+0r!
+0q!
+0p!
+0o!
+0n!
+0m!
+0l!
+0k!
+0j!
+0i!
+0h!
+0g!
+0f!
+0e!
+0d!
+0c!
+0b!
+0_!
+0^!
+0`!
+1a!
+0]!
+0\!
+0[!
+0Z!
+0Y!
+0X!
+0W!
+0V!
+0U!
+0T!
+0S!
+0R!
+0Q!
+0P!
+1u!
+1t!
+1v!
+0~!
+0}!
+0|!
+0{!
+0z!
+0y!
+0x!
+0w!
+0("
+0'"
+0&"
+0%"
+0$"
+0#"
+0""
+0!"
+0)"
+z*"
+0+"
+00"
+0/"
+0."
+0-"
+0,"
+05"
+04"
+03"
+02"
+01"
+06"
+07"
+08"
+0#$
+1$$
+0~#
+0}#
+0|#
+0{#
+0z#
+0y#
+0x#
+0w#
+0v#
+0u#
+0t#
+0s#
+0r#
+0q#
+18$
+17$
+19$
+0A$
+0@$
+0?$
+0>$
+0=$
+0<$
+0;$
+0:$
+0I$
+0H$
+0G$
+0F$
+0E$
+0D$
+0C$
+0B$
+0J$
+0L$
+0Q$
+0P$
+0O$
+0N$
+0M$
+0V$
+0U$
+0T$
+0S$
+0R$
+0W$
+0X$
+0Y$
+$end
+#5000
+1)
+1L
+0,!
+0-!
+0.!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+0k
+0i
+0j
+0-
+#10000
+0)
+0L
+#15000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+#20000
+0)
+0L
+#25000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+#30000
+0)
+0L
+#35000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+#40000
+0)
+0L
+#45000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+#50000
+0*
+0)
+0M
+0L
+#55000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+#60000
+0)
+0L
+#65000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+#70000
+0)
+0L
+#75000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1,
+1O
+#80000
+0)
+0L
+#85000
+1)
+1L
+1,!
+b1 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+0,
+1i
+0O
+1[!
+1Y!
+1X!
+1W!
+1V!
+1U!
+1U"
+1S"
+1R"
+1Q"
+1P"
+1O"
+1`!
+#90000
+0)
+0L
+#95000
+1)
+1L
+b10 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+0[!
+1Z!
+0Y!
+0X!
+0U!
+0U"
+1T"
+0S"
+0R"
+0O"
+b1 9"
+b1 :"
+0?"
+#100000
+0)
+0L
+#105000
+1)
+1L
+b11 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1[!
+1X!
+0W!
+0V!
+1U!
+1U"
+1R"
+0Q"
+0P"
+1O"
+b10 9"
+b10 :"
+b1 E"
+b1 F"
+b1 ="
+b1 ;"
+15"
+10"
+#110000
+0)
+0L
+#115000
+1)
+1L
+b100 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1\!
+0[!
+0X!
+0U!
+1V"
+0U"
+0R"
+0O"
+b11 9"
+b11 :"
+b11 ="
+b10 ="
+b11 ="
+b10 ;"
+1g"
+0e"
+0d"
+1c"
+0b"
+1a"
+1`"
+1_"
+1^"
+1]"
+0\"
+0["
+0Z"
+0Y"
+0X"
+1-#
+1l
+0u"
+0t"
+1s"
+0r"
+1q"
+1p"
+1o"
+1n"
+1m"
+0l"
+0k"
+0j"
+0i"
+0h"
+0;#
+0:#
+19#
+08#
+17#
+16#
+15#
+14#
+13#
+02#
+01#
+00#
+0/#
+0.#
+0z
+0y
+1x
+0w
+1v
+1u
+1t
+1s
+1r
+0q
+0p
+0o
+0n
+0m
+#120000
+0)
+0L
+#125000
+1)
+1L
+b101 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+0\!
+1[!
+0Z!
+1Y!
+0V"
+1U"
+0T"
+1S"
+b100 9"
+b100 :"
+#130000
+0)
+0L
+#135000
+1)
+1L
+b110 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1\!
+1Z!
+1V"
+1T"
+b101 9"
+b101 :"
+b10 E"
+b10 F"
+05"
+14"
+00"
+1/"
+#140000
+0)
+0L
+#145000
+1)
+1L
+1-!
+b111 /!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1k
+1j
+1{#
+1y#
+1x#
+1w#
+1v#
+1u#
+0\!
+0[!
+0Z!
+0Y!
+0`!
+0V"
+0U"
+0T"
+0S"
+1u$
+1s$
+1r$
+1q$
+1p$
+1o$
+1#$
+b110 9"
+b110 :"
+b11 E"
+b11 F"
+15"
+10"
+#150000
+0)
+0L
+#155000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+0{#
+1z#
+0y#
+0x#
+0u#
+0u$
+1t$
+0s$
+0r$
+0o$
+b100 E"
+b100 F"
+b1 Z$
+b1 [$
+05"
+04"
+13"
+00"
+0/"
+1."
+0`$
+#160000
+0)
+0L
+#165000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1{#
+1x#
+0w#
+0v#
+1u#
+1u$
+1r$
+0q$
+0p$
+1o$
+b10 Z$
+b10 [$
+b1 f$
+b1 g$
+b1 ^$
+b1 \$
+1V$
+1Q$
+#170000
+0)
+0L
+#175000
+1)
+1L
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+1|#
+0{#
+0x#
+0u#
+1v$
+0u$
+0r$
+0o$
+b11 Z$
+b11 [$
+b11 ^$
+b10 ^$
+b11 ^$
+b10 \$
+1*%
+0(%
+0'%
+0&%
+1%%
+0$%
+1#%
+1"%
+1!%
+1~$
+1}$
+0|$
+0{$
+0z$
+0y$
+1N%
+1+!
+1h
+1,#
+1M%
+1)%
+1f"
+08%
+07%
+06%
+15%
+04%
+13%
+12%
+11%
+10%
+1/%
+0.%
+0-%
+0,%
+0+%
+0\%
+0[%
+0Z%
+1Y%
+0X%
+1W%
+1V%
+1U%
+1T%
+1S%
+0R%
+0Q%
+0P%
+0O%
+19
+17
+16
+15
+14
+13
+xI
+xH
+xG
+xF
+xE
+xD
+xC
+xB
+xA
+x@
+x?
+x>
+x=
+x<
+0*!
+0)!
+0(!
+1'!
+0&!
+1%!
+1$!
+1#!
+1"!
+1!!
+0~
+0}
+0|
+0{
+0I
+0H
+0G
+1F
+0E
+1D
+1C
+1B
+1A
+1@
+0?
+0>
+0=
+0<
+#180000
+0)
+0L
+#185000
+1)
+1L
+b1 0!
+b1 Q#
+b0 Q#
+b1 r%
+b0 r%
+b1 '
+0|#
+1{#
+0z#
+1y#
+0v$
+1u$
+0t$
+1s$
+b1 ="
+b11 ="
+b10 ="
+b11 ="
+b11 ;"
+b100 Z$
+b100 [$
+b1 ^$
+b11 ^$
+b10 ^$
+b11 ^$
+b11 \$
+0%%
+1$%
+0#%
+0"%
+0}$
+0c"
+1b"
+0a"
+0`"
+0]"
+0s"
+1r"
+0q"
+0p"
+0m"
+05%
+14%
+03%
+02%
+0/%
+0Y%
+1X%
+0W%
+0V%
+0S%
+09#
+18#
+07#
+06#
+03#
+0x
+1w
+0v
+0u
+0r
+0'!
+1&!
+0%!
+0$
