@@ -1,2 +1,5 @@
 work
 vsim.wlf
+transcript
+*.cr.mti
+*.vstf

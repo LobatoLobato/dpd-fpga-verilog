@@ -16,8 +16,9 @@ module top(
     axis_if #(.DATA_WIDTH(DATA_WIDTH*2)) cap_axis();
     
     wire sampler_we;
-
-    configctl reg_bank_inst (
+    wire sampler_start;
+    
+    configctl config_controller (
         .cap_cfg(cap_cfg),
         .filt_cfg(filt_cfg)
     );
@@ -25,35 +26,37 @@ module top(
     assign cap_cfg.data = cap_axis.tdata;
     assign cap_cfg.err_code = cap_axis.tuser;
     
-    tddctl tdd_controller_inst(
-        .tdd_sig(tdd_sig),
+    tddctl tdd_controller (
+        .clk(clk), .rst(rst),
+        .tdd_tx(tdd_sig),
         .tdd_en(cap_cfg.tdd_en),
-        .we(sampler_we)
+        .trigger(cap_cfg.start),
+        .we(sampler_we),
+        .start(sampler_start)
     );
     
     sampler #(
     	.DATA_WIDTH(DATA_WIDTH),
     	.FIFO_DEPTH(FIFO_DEPTH)
     ) sampler_inst (
-    	.clk      (clk),
-    	.rst      (rst),
-        .we       (sampler_we),
-        .start    (cap_cfg.start),
+    	.clk(clk), .rst(rst),
+        .we           (sampler_we),
+        .start        (sampler_start),
         .delay_length (cap_cfg.delay_length),
-        .batch_length   (cap_cfg.batch_length),
-    	.ref_axis (ref_axis),
-    	.fb_axis  (fb_axis),
-        .cap_axis (cap_axis),
-        .batch_done(cap_cfg.done)
+        .batch_length (cap_cfg.batch_length),
+    	.ref_axis     (ref_axis),
+    	.fb_axis      (fb_axis),
+        .cap_axis     (cap_axis),
+        .batch_done   (cap_cfg.done)
     );
     
     filter #(
     	.DATA_WIDTH(DATA_WIDTH)
     ) filter_inst (
         .clk(clk), .rst(rst),
-        .weights(filt_cfg.weights),
-        .bypass(filt_cfg.bypass),
-    	.input_axis (ref_axis),
-    	.output_axis(fb_axis)
+        .weights     (filt_cfg.weights),
+        .bypass      (filt_cfg.bypass),
+    	.input_axis  (ref_axis),
+    	.output_axis (fb_axis)
     );
 endmodule
