@@ -5,6 +5,7 @@ interface axis_if #(
     logic [3:0]            tuser;
     logic                  tvalid;
     logic                  tready;
+    logic                  tlast;
     
     task init();
     begin
@@ -12,6 +13,7 @@ interface axis_if #(
         tvalid = 0;
         tready = 0;
         tuser  = 0;
+        tlast  = 0;
     end
     endtask
 
@@ -28,11 +30,11 @@ interface axis_if #(
     
     modport master (
         input  tready,
-        output tvalid, tdata, tuser
+        output tvalid, tdata, tuser, tlast
     );
 
     modport slave (
         output tready,
-        input  tvalid, tdata, tuser
+        input  tvalid, tdata, tuser, tlast
     );
 endinterface

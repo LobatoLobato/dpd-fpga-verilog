@@ -17,10 +17,9 @@ module sampler #(
     axis_if.slave ref_axis,
     axis_if.slave fb_axis,
 
-    axis_if.master cap_axis,
-    output wire batch_done
+    axis_if.master cap_axis
 );
-    wire done;
+    wire done, batch_done;
     wire capture_ref, capture_fb;
     wire capture_sample;
 
@@ -39,6 +38,7 @@ module sampler #(
     // Reference data FIFO
     // Captures unfiltered input data
     wire fifo_ref_valid;
+    wire fifo_ref_overflow, fifo_ref_bad_frame;
     wire logic [DATA_WIDTH-1:0] i_ref_capture;
     axis_fifo #(
         .DATA_WIDTH (DATA_WIDTH),
@@ -55,13 +55,15 @@ module sampler #(
         .m_axis_tdata (i_ref_capture),
         .m_axis_tkeep(), .m_axis_tlast(), .m_axis_tid(), .m_axis_tdest(), .m_axis_tuser(),
         .pause_req(), .pause_ack(),
-        .status_depth(), .status_depth_commit(), .status_overflow(), .status_bad_frame(), .status_good_frame()
+        .status_depth(), .status_depth_commit(), .status_good_frame(),
+        .status_overflow(fifo_ref_overflow), .status_bad_frame(fifo_ref_bad_frame)
     );
 
     // Feedback FIFO
     // Captures feedback data after $fb_delay clock cycles
     wire logic [DATA_WIDTH-1:0] i_fb_capture;
     wire fifo_fb_valid;
+    wire fifo_fb_overflow, fifo_fb_bad_frame;
     axis_fifo #(
         .DATA_WIDTH (DATA_WIDTH),
         .KEEP_ENABLE(0), .LAST_ENABLE(0), .ID_ENABLE(0), .DEST_ENABLE(0), .USER_ENABLE(0),
@@ -78,14 +80,16 @@ module sampler #(
         .m_axis_tdata (i_fb_capture),
         .m_axis_tkeep(), .m_axis_tlast(), .m_axis_tid(), .m_axis_tdest(), .m_axis_tuser(),
         .pause_req(1'd0), .pause_ack(),
-        .status_depth(), .status_depth_commit(), .status_overflow(), .status_bad_frame(), .status_good_frame()
+        .status_depth(), .status_depth_commit(), .status_good_frame(),
+        .status_overflow(fifo_fb_overflow), .status_bad_frame(fifo_fb_bad_frame)
     );
 
     assign done = fifo_ref_valid & fifo_fb_valid & capture_sample;
     
     assign cap_axis.tvalid = done;
     assign cap_axis.tdata = done ? {i_fb_capture, i_ref_capture} : 0;
-    assign cap_axis.tuser = 0;
+    assign cap_axis.tlast = batch_done;
+    assign cap_axis.tuser = {fifo_fb_bad_frame, fifo_fb_overflow, fifo_ref_bad_frame, fifo_ref_overflow};
 endmodule
 
 module capturectl (
@@ -105,32 +109,32 @@ module capturectl (
     
     always @(posedge clk) begin
         if (rst) begin
-            capture_ref = 0;
-            capture_fb = 0;
-            delay_counter = 0;
-            sample_counter = 0;
-            batch_done = 0;
+            capture_ref <= 0;
+            capture_fb <= 0;
+            delay_counter <= 0;
+            sample_counter <= 0;
+            batch_done <= 0;
         end else begin
             if (!capture_ref & start & we) begin
-                capture_ref = 1;
-                sample_counter = 0;
-                delay_counter = 0;
-                batch_done = 0;
+                capture_ref <= 1;
+                sample_counter <= 0;
+                delay_counter <= 1;
+                batch_done <= 0;
             end 
             
-            if (delay_counter >= delay_length - 1) begin
-                capture_fb = 1;
-                delay_counter = delay_length;
+            if (delay_counter >= delay_length) begin
+                capture_fb <= 1;
+                delay_counter <= delay_length;
             end else if(capture_ref) begin
-                delay_counter += 1;
+                delay_counter <= delay_counter + 1;
             end
             
             if (sample_counter >= batch_length - 1) begin
-                capture_fb = 0;
-                capture_ref = 0;
-                batch_done = 1;
+                capture_fb <= 0;
+                capture_ref <= 0;
+                batch_done <= 1;
             end else if(capture_fb & capture_done) begin
-                sample_counter += 1;
+                sample_counter <= sample_counter + 1;
             end    
         end
     end

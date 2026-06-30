@@ -15,7 +15,6 @@ module sampler_tb();
     reg rst;
     reg we;
     reg start;
-    wire batch_done;
     
     axis_if #(.DATA_WIDTH(DATA_WIDTH))   ref_axis();
     axis_if #(.DATA_WIDTH(DATA_WIDTH))   fb_axis ();
@@ -32,8 +31,7 @@ module sampler_tb();
         .delay_length(DELAY), .batch_length(BATCH_LEN),
     	.ref_axis(ref_axis),
     	.fb_axis (fb_axis),
-        .cap_axis(cap_axis),
-        .batch_done(batch_done)
+        .cap_axis(cap_axis)
     );
 
     assign ref_capture = cap_axis.tdata[DATA_WIDTH-1:0];
@@ -62,25 +60,29 @@ module sampler_tb();
         start = 1;
         @(posedge clk);
         start = 0;
-        // Sends the input samples
-        ref_axis.send(clk, 500);
-        ref_axis.send(clk, 200);
-        ref_axis.send(clk, 300);
+        fork
+            begin
+                ref_axis.send(clk, 500);
+                ref_axis.send(clk, 200);
+                ref_axis.send(clk, 300);
+                ref_axis.send(clk, 45);
+            end
+            begin
+                fb_axis.send(clk, 10);
+                fb_axis.send(clk, 20);
+                fb_axis.send(clk, 30);
+                fb_axis.send(clk, 40);
+                fb_axis.send(clk, 50);
+                fb_axis.send(clk, 60);
+                fb_axis.send(clk, 70);
 
-        // Ignored samples
-        ref_axis.send(clk, 10);
-        ref_axis.send(clk, 20);
-        ref_axis.send(clk, 30);
-        
-        // Sends the filtered samples
-        fb_axis.send(clk, 1000);
-        fb_axis.send(clk, 400);
-        fb_axis.send(clk, 600);
-
-        // Ignored filtered samples
-        fb_axis.send(clk, 20);
-        fb_axis.send(clk, 40);
-        fb_axis.send(clk, 60);
+                // Actual filtered values
+                fb_axis.send(clk, 1000);
+                fb_axis.send(clk, 400);
+                fb_axis.send(clk, 600);
+                fb_axis.send(clk, 90);
+            end
+        join
         
         repeat (10) @(posedge clk);
 
@@ -92,7 +94,7 @@ module sampler_tb();
         $stop;
     end
 
-    always @(posedge batch_done) begin
+    always @(posedge cap_axis.tlast) begin
         tb_result &= tb_sample_count == 3;
         tb_batch_count += 1;
     end
