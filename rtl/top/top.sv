@@ -1,3 +1,4 @@
+// slang lint_off unconnected-output-port
 `timescale 1ns/1ps
 
 module top(
@@ -7,55 +8,46 @@ module top(
 );
     parameter DATA_WIDTH = 14;
     parameter FIFO_DEPTH = 16;
-
-    capture_cfg_if #(.DATA_WIDTH(DATA_WIDTH)) cap_cfg();
-    filter_cfg_if filt_cfg();
+    parameter AXIL_DATA_W = 32;
+    parameter AXIL_ADDR_W = configctl_defs::ADDR_W;
     
     axis_if #(.DATA_WIDTH(DATA_WIDTH))   ref_axis();
     axis_if #(.DATA_WIDTH(DATA_WIDTH))   fb_axis ();
     axis_if #(.DATA_WIDTH(DATA_WIDTH*2)) cap_axis();
-    
-    wire sampler_we;
-    wire sampler_start;
-    
-    configctl config_controller (
-        .cap_cfg(cap_cfg),
-        .filt_cfg(filt_cfg)
-    );
 
-    assign cap_cfg.data = cap_axis.tdata;
-    assign cap_cfg.err_code = cap_axis.tuser;
+    taxi_axil_if #(.DATA_W(AXIL_DATA_W), .ADDR_W(AXIL_ADDR_W)) axil(.tb_clk());
+
+    configctl #(.DATA_W(AXIL_DATA_W)) config_controller (
+    	.clk         (clk),
+    	.rst         (rst),
+    	.axil_wr     (axil),
+    	.axil_rd     (axil)
+    );
     
     tddctl tdd_controller (
         .clk(clk), .rst(rst),
         .tdd_tx(tdd_sig),
-        .tdd_en(cap_cfg.tdd_en),
-        .trigger(cap_cfg.start),
-        .we(sampler_we),
-        .start(sampler_start)
+        .tdd_en(config_controller.tdd_en),
+        .trigger(config_controller.start)
     );
     
-    sampler #(
-    	.DATA_WIDTH(DATA_WIDTH),
-    	.FIFO_DEPTH(FIFO_DEPTH)
-    ) sampler_inst (
+    sampler #(.DATA_WIDTH(DATA_WIDTH), .FIFO_DEPTH(FIFO_DEPTH)) sampler_inst (
     	.clk(clk), .rst(rst),
-        .we           (sampler_we),
-        .start        (sampler_start),
-        .delay_length (cap_cfg.delay_length),
-        .batch_length (cap_cfg.batch_length),
+        .we           (tdd_controller.we),
+        .start        (tdd_controller.start),
+        .delay_length (config_controller.delay_length),
+        .batch_length (config_controller.batch_length),
     	.ref_axis     (ref_axis),
     	.fb_axis      (fb_axis),
-        .cap_axis     (cap_axis),
-        .batch_done   (cap_cfg.done)
+        .cap_axis     (cap_axis)
     );
     
     filter #(
     	.DATA_WIDTH(DATA_WIDTH)
     ) filter_inst (
         .clk(clk), .rst(rst),
-        .weights     (filt_cfg.weights),
-        .bypass      (filt_cfg.bypass),
+        .weights     (config_controller.weights),
+        .bypass      (config_controller.bypass),
     	.input_axis  (ref_axis),
     	.output_axis (fb_axis)
     );
