@@ -1,0 +1,17 @@
+{
+    "flags": "-Wno-width-trunc -Wno-width-expand -Wno-unnamed-generate -Wno-arith-op-mismatch -I sim/uvm/lib -I rtl -I sim/uvm/configctl -I sim/uvm/tddctl -I sim/uvm/filter -I sim/uvm/sampler -I sim/uvm/dpd -I /devel/lobato/tools/fpga/xilinx/2025.2/Vivado/data/system_verilog/uvm_1.2",
+    "index": [
+        {
+            "dirs": [
+                "/devel/lobato/tools/fpga/xilinx/2025.2/Vivado/data/system_verilog/uvm_1.2",
+                "sim/uvm/lib",
+                "sim/uvm/configctl",
+                "sim/uvm/tddctl",
+                "sim/uvm/filter",
+                "sim/uvm/sampler",
+                "sim/uvm/dpd",
+                "rtl"
+            ]
+        }
+    ]
+}

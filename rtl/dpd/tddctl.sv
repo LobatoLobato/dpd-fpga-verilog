@@ -1,3 +1,7 @@
+`resetall
+`timescale 1ns / 1ps
+`default_nettype none
+
 module tddctl(
     input  wire clk, rst,
     input  wire tdd_en, tdd_tx,
@@ -10,19 +14,22 @@ module tddctl(
     wire trigger_posedge = ~trigger_r && trigger;
 
     assign we = (tdd_en & tdd_tx) | ~tdd_en;
-    
+
     always_ff @(posedge clk or posedge rst) begin
         if (rst) trigger_r <= 1'b0;
         else     trigger_r <= trigger;
     end
-    
+
     always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin 
+        if (rst) begin
             state        <= Idle;
             start        <= 0;
         end else case (state)
             Idle: if (trigger_posedge) begin
-                if (tdd_en && ~tdd_tx) state <= WaitTdd;
+                if (tdd_en && ~tdd_tx) begin
+                    state <= WaitTdd;
+                    start <= 0;
+                end
                 else start <= 1;
             end else start <= 0;
             WaitTdd: if (tdd_tx || ~tdd_en) begin
@@ -33,6 +40,6 @@ module tddctl(
                 state <= Idle;
                 start <= 0;
             end
-        endcase 
+        endcase
     end
 endmodule
